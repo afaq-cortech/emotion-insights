@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuthStore } from '@/stores/authStore';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -41,7 +41,8 @@ interface ReactorStatus {
 }
 
 export default function Index() {
-  const { user, signOut } = useAuth();
+  const user = useAuthStore((state) => state.user);
+  const signOut = useAuthStore((state) => state.signOut);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [subscriptionChoices, setSubscriptionChoices] = useState<SubscriptionChoice[]>([]);
   const [reactorStatus, setReactorStatus] = useState<ReactorStatus | null>(null);

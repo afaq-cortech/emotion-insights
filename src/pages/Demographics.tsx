@@ -9,7 +9,7 @@ import * as z from 'zod';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuthStore } from '@/stores/authStore';
 
 interface DemoQuestion {
   demo: string;
@@ -31,7 +31,7 @@ export default function Demographics() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const user = useAuthStore((state) => state.user);
 
   const form = useForm<Record<string, string>>({
     resolver: demoQuestions.length > 0 ? zodResolver(createFormSchema(demoQuestions)) : undefined,
